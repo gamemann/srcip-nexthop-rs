@@ -1,3 +1,6 @@
+[![XDP Stats Build Workflow](https://github.com/gamemann/srcip-nexthop-rs/actions/workflows/build.yml/badge.svg)](https://github.com/gamemann/srcip-nexthop-rs/actions/workflows/build.yml) [![XDP Stats Run Workflow](https://github.com/gamemann/srcip-nexthop-rs/actions/workflows/run.yml/badge.svg)](https://github.com/gamemann/srcip-nexthop-rs/actions/workflows/run.yml)
+
+
 A simple Rust program that attaches an eBPF program to the [TC](https://man7.org/linux/man-pages/man8/tc.8.html) egress hook of a specified network interface using [Aya](https://aya-rs.dev/book/).
 
 This program maps source IPs to next hops (destination MAC addresses) and redirects packets to the appropriate next hop based on the source IP.
