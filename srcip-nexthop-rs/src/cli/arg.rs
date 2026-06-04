@@ -3,8 +3,8 @@ use clap::Parser;
 #[derive(Debug, Parser)]
 #[command(version, about, long_about = None)]
 pub struct Args {
-    #[arg(short = 'i', long = "iface", default_value = "eth0")]
-    pub iface: String,
+    #[arg(short = 'i', long = "iface", default_value = None)]
+    pub iface: Option<String>,
 
     #[arg(
         short = 'c',

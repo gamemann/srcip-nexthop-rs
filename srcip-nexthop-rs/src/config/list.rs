@@ -4,8 +4,9 @@ impl Config {
     pub fn list(&self) {
         println!("Listing settings...");
 
+        println!("Interface: {}", self.iface);
         println!(
-            "Counters store: {}",
+            "Counters Path: {}",
             self.counters_store.as_deref().unwrap_or("None")
         );
 

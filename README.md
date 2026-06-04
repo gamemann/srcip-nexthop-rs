@@ -64,7 +64,7 @@ Here are the current arguments that the tool supports.
 
 | Argument | Short | Description | Default Value |
 | --- | --- | --- | --- |
-| `--iface` | `-i` | The network interface to attach the eBPF program to. | `eth0` |
+| `--iface` | `-i` | Overrides the network interface specified in the configuration file. | - |
 | `--cfg` | `-c` | The path to the configuration file. | `/etc/srcip-nexthop/cfg.json` |
 | `--list` | `-l` | List all configured hops and exit. | `false` |
 | `--no-stats` | `-n` | Do not print stats to the console. | `false` |
@@ -72,10 +72,11 @@ Here are the current arguments that the tool supports.
 ## Configuration File
 The configuration file is a JSON file that specifies the mapping of source IPs to next hops (destination MAC addresses).
 
-| Field | Description |
-| --- | --- |
-| `counters_store` | Optional path to a file where the program will write the counters for each hop. If not specified, counters will not be written to a file. |
-| `hops` | A list of hops, where each hop specifies a source IP and a destination MAC address. |
+| Field | Description | Default Value |
+| --- | --- | --- |
+| `iface` | The network interface to which the eBPF program will be attached. If not specified, the program will use the default interface specified in the code (e.g., `eth0`). | `eth0` |
+| `counters_store` | Optional path to a file where the program will write the counters for each hop. If not specified, counters will not be written to a file. | `/tmp/counters.txt` |
+| `hops` | A list of hops, where each hop specifies a source IP and a destination MAC address. | `[]` |
 
 Here is an example configuration file:
 

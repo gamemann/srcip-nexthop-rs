@@ -11,13 +11,16 @@ pub struct Hop {
 #[serde(default)]
 pub struct Config {
     pub counters_store: Option<String>,
+    pub iface: String,
+
     pub hops: Vec<Hop>,
 }
 
 impl Default for Config {
     fn default() -> Self {
         Self {
-            counters_store: Some("./counters.txt".to_string()),
+            counters_store: Some("/tmp/srcip-nexthop_counters.txt".to_string()),
+            iface: "eth0".to_string(),
             hops: Vec::new(),
         }
     }

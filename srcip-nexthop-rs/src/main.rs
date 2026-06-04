@@ -47,6 +47,8 @@ async fn main() -> Result<()> {
     // Initialize config with default values first.
     let mut cfg = Config::default();
 
+    let iface = iface.unwrap_or_else(|| cfg.iface.clone());
+
     // Attempt to load config from file.
     cfg.from_file(&cfg_str)
         .await
