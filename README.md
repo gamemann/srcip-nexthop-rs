@@ -66,6 +66,7 @@ Here are the current arguments that the tool supports.
 | --- | --- | --- | --- |
 | `--iface` | `-i` | Overrides the network interface specified in the configuration file. | - |
 | `--cfg` | `-c` | The path to the configuration file. | `/etc/srcip-nexthop/cfg.json` |
+| `--duration` | `-d` | The duration for which the program should run in seconds before exiting. If not specified, the program will run indefinitely until interrupted. | - |
 | `--list` | `-l` | List all configured hops and exit. | `false` |
 | `--no-stats` | `-n` | Do not print stats to the console. | `false` |
 

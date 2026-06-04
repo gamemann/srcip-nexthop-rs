@@ -28,7 +28,12 @@ use srcip_nexthop_rs_common::{
         StatType::{self, StatsMax},
     },
 };
-use tokio::{fs::write, io::Interest, select, signal, task, time::sleep};
+use tokio::{
+    fs::write,
+    io::Interest,
+    select, signal, task,
+    time::{Instant, interval, sleep},
+};
 
 use crate::{cli::arg::Args, config::cfg::Config, maps::Maps};
 
@@ -42,6 +47,7 @@ async fn main() -> Result<()> {
         cfg_str,
         list,
         no_stats,
+        duration,
     } = Args::parse();
 
     // Initialize config with default values first.
@@ -205,9 +211,25 @@ async fn main() -> Result<()> {
         let running = running.clone();
 
         task::spawn(async move {
+            // Get start time.
+            let start = Instant::now();
+
             while running.load(Ordering::Relaxed) {
                 // Sleep for 1 second.
                 sleep(Duration::from_secs(1)).await;
+
+                if let Some(duration) = duration {
+                    if start.elapsed() >= Duration::from_secs(duration as u64) {
+                        println!(
+                            "Specified duration of {:?} has elapsed, killing program...",
+                            duration
+                        );
+
+                        running.store(false, Ordering::Relaxed);
+
+                        break;
+                    }
+                }
 
                 // We need to process contents inside of its own block so we don't perform async file write while holding the std mutex lock on the map (not allowed).
                 let contents = {
@@ -269,8 +291,16 @@ async fn main() -> Result<()> {
         });
     }
 
+    let mut tick = interval(Duration::from_secs(1));
+
     loop {
         select! {
+            _ = tick.tick() => {
+                // Check if the program is still running every tick and exit if not.
+                if !running.load(Ordering::Relaxed) {
+                    break;
+                }
+            }
             _ = signal::ctrl_c() => {
                 println!("Received Ctrl-C, exiting...");
 
