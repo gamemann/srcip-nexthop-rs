@@ -4,7 +4,7 @@ After=network-online.target
 Requires=network-online.target
 
 [Service]
-ExecStart=/usr/bin/srcip-nexthop -s
+ExecStart=/usr/bin/srcip-nexthop -n
 Restart=always
 
 [Install]
