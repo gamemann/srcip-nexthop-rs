@@ -1,0 +1,11 @@
+[Unit]
+Description=Src IP Nexthop
+After=network-online.target
+Requires=network-online.target
+
+[Service]
+ExecStart=/usr/bin/srcip-nexthop -s
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
