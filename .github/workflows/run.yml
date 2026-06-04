@@ -45,4 +45,4 @@ jobs:
       run: echo "INTERFACE=$(ip route | awk '/default/ {print $5}')" >> $GITHUB_ENV
 
     - name: Run xdpstats for 10 seconds
-      run: sudo -E $HOME/.cargo/bin/cargo run --release -- -i ${{ env.INTERFACE }} -d 10
+      run: sudo -E $HOME/.cargo/bin/cargo run --release -- -i ${{ env.INTERFACE }} -d 10 -c /tmp/cfg.json
